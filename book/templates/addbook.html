@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block main %}
+<tr>
+    <td height="510" valign="top" style="padding:5px;"><table width="98%" height="487" border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td height="22" valign="top" class="word_orange">当前位置：图书管理 &gt; 图书档案管理 &gt; 添加图书信息 &gt;&gt;&gt;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td width="84%">&nbsp;      </td>
+</tr>
+</tbody></table>
+<form name="form1" method="post" action="/book/addbook/" onsubmit="return checkAll5()">
+{% csrf_token %}
+  <table width="58%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#D2E3E6" bordercolorlight="#FFFFFF">
+  <tbody><tr align="center">
+    <td width="20%" align="left" style="padding:5px;">条形码：</td>
+    <td width="80%" align="left">
+      <input name="bookcode" type="number" id="bookcode" value= '' size="30" onblur="checkbook()"><span id="bookSpan">*必填项*</span>
+    </td>
+    </tr>
+  <tr>
+      <td align="left" style="padding:5px;">书&emsp;&emsp;名：</td>
+      <td align="left"><input name="bname" type="text" id="bname" size="30" value='' onblur="func1()"><span id="bnameSpan">*必填项*</span></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">作&emsp;&emsp;者：</td>
+      <td align="left"><input name="author" type="text" id="author" size="30" value='' onblur="func2()"><span id="authorSpan">*必填项*</span></td>
+    </tr>
+  <tr>
+      <td  align="left" style="padding:5px;">图书类型：</td>
+      <td align="left"><select name="booktype" class="wenbenkuang" id="booktype">
+          {% for bt in booktype %}
+            <option value="{{ bt.btid }}">{{ bt.typename }}</option>
+          {% endfor %}
+          </select></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">出版社：</td>
+      <td align="left"><input name="pubilshing" type="text" id="pubilshing" size="30" value='' onblur="func3()"><span id="pubilshingSpan">*必填项*</span></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">I S B N：</td>
+      <td align="left"><input name="isbn" type="text" id="isbn" size="30" value='' onblur="checkisbn()"><span id="isbnSpan" >*必填项*</span></td>
+    </tr>
+   <tr>
+      <td align="left" style="padding:5px;">单&emsp;&emsp;价：</td>
+      <td align="left"><input name="price" type="text" id="price" size="30" value=''></td>
+    </tr>
+   <tr>
+      <td  align="left" style="padding:5px;">选择书架：</td>
+      <td align="left"><select name="bookcase" class="wenbenkuang" id="bookcase">
+          {% for bc in bookcase %}
+            <option value="{{ bc.bcid }}">{{ bc.bcname }}</option>
+          {% endfor %}
+          </select></td>
+  </tr>
+  <tr>
+      <td height="65" align="left" style="padding:5px;">&nbsp;</td>
+      <td><input name="Submit" type="submit" class="btn_grey" value="保存" onclick="checkForm2()">
+        &nbsp;
+        <input name="Submit2" type="reset" class="btn_grey" value="重置">
+          &nbsp;
+          <a href="/book/"><input type="button" value="取消" class="btn_grey"></a>
+      </td>
+
+    </tr>
+</tbody></table>
+</form></td>
+      </tr>
+    </tbody></table>
+</td>
+  </tr>
+
+{% endblock %}

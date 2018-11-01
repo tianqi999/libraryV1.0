@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block main %}
+    <style>
+        .redSpan{color:red;font-weight:bold;font-size: 5px}
+		.blueSpan{color:blue;font-weight:bold;font-size: 5px}
+        span{
+            font-size: 12px;
+            color: #ccc;
+        }
+    </style>
+    <script language="JavaScript">
+        function checkFiles(eleId){
+            var ele = document.getElementById(eleId).value;
+            var eleSpan = document.getElementById(eleId+'Span');
+            dataname= document.getElementById(eleId).alt;
+
+            if(ele.length == 0){
+                eleSpan.innerHTML = dataname + '不可为空'
+                eleSpan.className = 'redSpan'
+                return false
+            }
+            else {
+                eleSpan.innerHTML = 'OK'
+                eleSpan.className = 'blueSpan'
+                return true
+            }
+
+        }
+
+        function checkname(){
+            return checkFiles('name')
+	}
+        function checkOldPwd(){
+            return checkFiles('oldpwd')
+	}
+        function checkPwd(){
+            return checkFiles('pwd')
+	}
+        function checkPwd1(){
+				var pwd=document.getElementById("pwd").value;
+
+				var pwd1=document.getElementById("pwd1").value;
+
+				var spanObj=document.getElementById("pwd1Span");
+
+				if(pwd1==""){
+					spanObj.innerHTML="确认密码不可为空";
+					spanObj.className = 'redSpan';
+					return false;
+				}else if(pwd==pwd1){
+					spanObj.innerHTML="OK";
+					spanObj.className="blueSpan";
+					return true;
+				}else{
+					spanObj.innerHTML="两次输入密码不一致";
+					spanObj.className = 'redSpan';
+					return false;
+				}
+
+			}
+        function checkAll(){
+
+            var flag=checkname()&checkOldPwd()&checkPwd()&checkPwd1();
+{#            var sub = document.getElementById('sub')#}
+{#            sub = sub.disabled#}
+			return flag == 1?true:false;
+
+
+			}
+</script>
+
+<tr>
+    <td valign="top" bgcolor="#FFFFFF"><table width="99%" height="510" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tableBorder_gray">
+  <tbody><tr>
+    <td height="510" valign="top" style="padding:5px;"><table width="98%" height="487" border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td height="22" valign="top" class="word_orange">当前位置：更改口令 &gt;&gt;&gt;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td width="84%">&nbsp;      </td>
+</tr>
+</tbody></table>  <form name="form1" method="post" action="/library/pwd_Modify/" onsubmit=" return checkAll()">
+            {% csrf_token %}
+  <table width="60%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#D2E3E6" bordercolorlight="#FFFFFF">
+  <tbody><tr align="center">
+    <td width="27%" align="left" style="padding:5px;">管理员名称：</td>
+
+    <td width="73%" align="left">
+      <input name="name" type="text" id="name" value = '' alt="管理员名称" size="30" onblur="checkname()"><span id="nameSpan">*必填项*</span>    </td>
+
+    </tr><tr>
+    <td align="left" style="padding:5px;">原密码：</td>
+    <td align="left"><input name="oldpwd" type="password" id="oldpwd" size="30" alt="原密码" onblur="checkOldPwd()"><span id="oldpwdSpan">*必填项*</span>
+      <input name="holdpwd" type="hidden" id="holdpwd" value="1234"></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">新密码：</td>
+      <td align="left"><input name="pwd" type="password" id="pwd" size="30" alt="新密码" onblur="checkPwd()"><span id="pwdSpan">*必填项*</span></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">确认新密码：</td>
+      <td align="left"><input name="pwd1" type="password" id="pwd1" size="30" alt="确认密码" onblur="checkPwd1()"><span id="pwd1Span">*必填项*</span></td>
+    </tr>
+        <tr>
+        <td></td>
+        <td><span id="error" style="color: red">{{ message }}</span></td>
+        <td></td>
+    </tr>
+    <tr>
+      <td height="45" align="left" style="padding:5px;">&nbsp;</td>
+            <td><input id = 'sub' name="Submit" type="submit" class="btn_grey" value="保存">
+        <input name="Submit2" type="reset" class="btn_grey" value="取消"></td>
+    </tr>
+</tbody></table>
+</form></td>
+      </tr>
+    </tbody></table>
+</td>
+  </tr>
+</tbody></table>
+{% endblock %}

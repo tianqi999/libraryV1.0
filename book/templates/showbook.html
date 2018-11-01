@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block main %}
+<tr>
+    <td valign="top" bgcolor="#FFFFFF"><table width="99%" height="510" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tableBorder_gray">
+  <tbody><tr>
+    <td height="510" valign="top" style="padding:5px;"><table height='487' width="98%" border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td height="22" valign="top" class="word_orange">当前位置：图书管理 &gt; 图书档案管理 &gt;&gt;&gt;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td width="87%">&nbsp;      </td>
+<td width="13%">
+      <a href="/book/addbook/">添加图书信息</a></td>
+  </tr>
+</tbody></table>
+<form action="" method="post" name="form1" style="height: 25px">{% csrf_token %}
+<table width="98%" height="38" border="0" cellpadding="0" cellspacing="0" bgcolor="#E3F4F7" class="tableBorder_gray">
+  <tbody><tr>
+    <td align="center" bgcolor="#F9D16B">
+&nbsp;<img src="{% static 'search.gif' %}" width="45" height="28"></td>
+    <td bgcolor="#F9D16B">请选择查询依据：
+      <select name="method" class="wenbenkuang" id="f">
+        <option value="bookcode">条形码</option>
+        <option value="typename">类别</option>
+        <option value="bookname" selected="">书名</option>
+        <option value="author">作者</option>
+        <option value="publishing">出版社</option>
+        <option value="bookcase">书架</option>
+                  </select>
+      <input name="key" type="text" id="key" size="50">
+      <input name="Submit" type="submit" class="btn_grey" value="查询"></td>
+  </tr>
+</tbody></table></form>
+  <table width="98%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#F6B83B" bordercolorlight="#FFFFFF">
+  <tbody><tr align="center" bgcolor="#e3F4F7">
+    <td width="11%" bgcolor="#F9D16B">条形码</td>
+    <td width="23%" bgcolor="#F9D16B">图书名称</td>
+    <td width="14%" bgcolor="#F9D16B">作者</td>
+    <td width="12%" bgcolor="#F9D16B">图书类型</td>
+    <td width="14%" bgcolor="#F9D16B">出版社</td>
+    <td width="8%" bgcolor="#F9D16B">书架</td>
+    <td width="5%" bgcolor="#F9D16B">修改</td>
+    <td width="5%" bgcolor="#F9D16B">删除</td>
+  </tr>
+{% for b in book %}
+
+  <tr>
+    <td style="padding:5px;" align="center">&nbsp;{{ b.bookcode }}</td>
+    <td style="padding:5px;" align="center">{{ b.bname }}</td>
+    <td style="padding:5px;" align="center">&nbsp;{{ b.author }}</td>
+    {% if b.btid %}
+       <td style="padding:5px;" align="center">&nbsp;{{ b.btid.typename }}</td>
+    {% else %}
+       <td style="padding:5px;" align="center">&nbsp;<a href="/book/changebook/{{ b.bid }}">添加</a></td>
+    {% endif %}
+  <td style="padding:5px;" align="center">&nbsp;{{ b.pubilshing }}</td>
+  {% if b.bcid %}
+         <td style="padding:5px;" align="center">&nbsp;{{ b.bcid.bcname }}</td>
+  {% else %}
+        <td style="padding:5px;" align="center">&nbsp;<a href="/book/changebook/{{ b.bid }}">添加</a></td>
+  {% endif %}
+    <td align="center"><a href="/book/changebook/{{ b.bid }}">修改</a></td>
+    <td align="center"><a href="/book/delbook/{{ b.bid }}" onclick="return confirm('确认删除吗？')">删除</a></td>
+  </tr>
+{% endfor %}
+</tbody></table></td>
+      </tr>
+    </tbody></table>
+    <div align="center">
+    {% if book.has_previous %}
+        <a style="color:black" class="page-number" href="/book/showbook/{{ book.previous_page_number }}"> 上一页</a>
+        {% else %}
+         <a style="color:black" class="page-number" > 上一页</a>
+    {% endif %}
+        {% if page %}
+        {% for pr in page %}
+           {% if book.number == pr %}
+                &nbsp;<a style="color:black;font-weight: bold;" href="/book/showbook/{{ pr }}">{{ pr }}</a>&nbsp;
+           {% else %}
+               &nbsp;<a  style="color: black" href="/book/showbook/{{ pr }}">{{ pr }}</a>&nbsp;
+           {% endif %}
+       {% endfor %}
+            {% else %}
+            <a style="color: black;font-weight: bold" >&nbsp;1&nbsp;</a>
+        {% endif %}
+    {% if book.has_next %}
+        <a style="color:black" class="page-number" href="/book/showbook/{{ book.next_page_number }}"> 下一页</a>
+        {% else %}
+        <a style="color:black" class="page-number" > 下一页</a>
+    {% endif %}
+    </div>
+</td>
+  </tr>
+</tbody></table>
+{% endblock %}

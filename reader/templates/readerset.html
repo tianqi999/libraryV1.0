@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block main %}
+    <tr>
+    <td valign="top" bgcolor="#FFFFFF"><table width="99%" height="510" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tableBorder_gray">
+  <tbody><tr>
+    <td height="510" valign="top" style="padding:5px;"><table width="98%" height="487" border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td height="22" valign="top" class="word_orange">当前位置：读者管理 &gt;&gt;&gt;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+  <tr>
+    <td width="87%">&nbsp;      </td>
+<td width="13%">
+      <a href="/reader/addreader/">添加读者信息</a></td>
+  </tr>
+</tbody>
+ </table>
+<form action="" method="post" name="form1" style="height: 25px" >{% csrf_token %}
+        <table width="95%" height="38" border="0" cellpadding="0" cellspacing="0" bgcolor="#E3F4F7" class="tableBorder_gray" >
+  <tbody><tr>
+    <td align="center" bgcolor="#F9D16B">
+&nbsp;<img src="{% static 'search.gif' %}" width="45" height="28"></td>
+    <td bgcolor="#F9D16B">请选择查询依据：
+      <select name="method" class="wenbenkuang" id="method">
+        <option value="barcode">借书卡号</option>
+        <option value="rname">姓&emsp;名</option>
+          <option value="paperno">证件号码</option>
+                  </select>
+      <input name="key" type="text" id="key" size="50">
+      <input name="Submit" type="submit" class="btn_grey" value="查询" ></td>
+  </tr>
+</tbody></table></form>
+  <table width="95%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#F6B83B" bordercolorlight="#FFFFFF">
+  <tbody><tr align="center" bgcolor="#e3F4F7">
+     <td width="13%" bgcolor="#F9D16B">借书卡号</td>
+    <td width="10%" bgcolor="#F9D16B">姓名</td>
+    <td width="7%" bgcolor="#F9D16B">性别</td>
+    <td width="13%" bgcolor="#F9D16B">读者卡类型</td>
+    <td width="20%" bgcolor="#F9D16B">证件号码</td>
+    <td width="12%" bgcolor="#F9D16B">电话</td>
+    <td width="15%" bgcolor="#F9D16B">Email</td>
+    <td width="5%" bgcolor="#F9D16B">修改</td>
+    <td width="5%" bgcolor="#F9D16B">删除</td>
+  </tr>
+  {% for r in read %}
+  <tr>
+    <td style="padding:5px;">{{ r.barcode }}</td>
+    <td align="center" style="padding:5px;">{{ r.rname }}</td>
+    <td align="center" style="padding:5px;">{{ r.gender }}</td>
+    <td align="center">{{ r.rtid.typename }}</td>
+    <td align="center">{{ r.paperno }}</td>
+    <td align="center">{{ r.tel }}</td>
+    <td align="center">{{ r.email }}</td>
+    <td align="center"><a href="/reader/readerchange/{{ r.rid }}">修改</a></td>
+    <td align="center"><a href="/reader/readerdel/{{ r.rid }}" onclick="return confirm('确定要删除吗？')">删除</a></td>
+  </tr>
+    {% endfor %}
+</tbody></table></td>
+      </tr>
+    </tbody></table>
+    <div align="center">
+    {% if read.has_previous %}
+        <a style="color:black" class="page-number" href="/reader/page/{{ read.previous_page_number }}"> 上一页</a>
+        {% else %}
+         <a style="color:black" class="page-number" > 上一页</a>
+    {% endif %}
+        {% if page %}
+        {% for pr in page %}
+           {% if read.number == pr %}
+                &nbsp;<a style="color:black;font-weight: bold;" href="/reader/page/{{ pr }}">{{ pr }}</a>&nbsp;
+           {% else %}
+               &nbsp;<a  style="color: black" href="/reader/page/{{ pr }}">{{ pr }}</a>&nbsp;
+           {% endif %}
+       {% endfor %}
+            {% else %}
+            <a style="color: black;font-weight: bold">&nbsp;1&nbsp;</a>
+        {% endif %}
+    {% if read.has_next %}
+        <a style="color:black" class="page-number" href="/reader/page/{{ read.next_page_number }}"> 下一页</a>
+        {% else %}
+        <a style="color:black" class="page-number" > 下一页</a>
+    {% endif %}
+    </div>
+</td>
+  </tr>
+</tbody></table>
+{% endblock %}

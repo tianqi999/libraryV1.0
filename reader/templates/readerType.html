@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block main %}
+<td valign="top" bgcolor="#FFFFFF"><table width="99%" height="510" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" class="tableBorder_gray">
+  <tbody><tr>
+    <td height="510" valign="top" style="padding:5px;"><table width="98%" height="487" border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td height="22" valign="top" class="word_orange">当前位置：读者管理 &gt; 读者类型管理 &gt;&gt;&gt;</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top">
+ <table width="91%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td align="right">
+      <a href="#" onclick="window.open('readerType_add.jsp','','width=292,height=175')">添加读者类型信息</a> </td>
+</tr>
+</tbody></table>
+  <table width="91%" border="1" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#F6b83B" bordercolorlight="#FFFFFF">
+  <tbody><tr align="center" bgcolor="#e3F4F7">
+    <td width="35%" bgcolor="#F9D16B">读者类型名称</td>
+    <td width="35%" bgcolor="#F9D16B">可借数量</td>
+    <td width="16%" bgcolor="#F9D16B">修改</td>
+    <td width="14%" bgcolor="#F9D16B">删除</td>
+  </tr>
+
+  <tr>
+    <td style="padding:5px;">&nbsp;学生</td>
+    <td style="padding:5px;">&nbsp;10</td>
+    <td align="center"><a href="#" onclick="window.open('readerType.do?action=readerTypeModifyQuery&amp;ID=1','','width=292,height=175')">修改</a></td>
+    <td align="center"><a href="readerType.do?action=readerTypeDel&amp;ID=1">删除</a></td>
+  </tr>
+
+  <tr>
+    <td style="padding:5px;">&nbsp;教师</td>
+    <td style="padding:5px;">&nbsp;20</td>
+    <td align="center"><a href="#" onclick="window.open('readerType.do?action=readerTypeModifyQuery&amp;ID=2','','width=292,height=175')">修改</a></td>
+    <td align="center"><a href="readerType.do?action=readerTypeDel&amp;ID=2">删除</a></td>
+  </tr>
+
+  <tr>
+    <td style="padding:5px;">&nbsp;其他</td>
+    <td style="padding:5px;">&nbsp;5</td>
+    <td align="center"><a href="#" onclick="window.open('readerType.do?action=readerTypeModifyQuery&amp;ID=3','','width=292,height=175')">修改</a></td>
+    <td align="center"><a href="readerType.do?action=readerTypeDel&amp;ID=3">删除</a></td>
+  </tr>
+
+</tbody></table></td>
+      </tr>
+    </tbody></table>
+</td>
+  </tr>
+</tbody></table>
+{% endblock %}

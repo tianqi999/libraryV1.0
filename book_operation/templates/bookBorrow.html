@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block main %}
+    <tr>
+        <td valign="top" bgcolor="#FFFFFF">
+            <table width="100%" height="509" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF"
+                   class="tableBorder_gray">
+                <tbody>
+                <tr>
+                    <td height="27" valign="top" style="padding:5px;" class="word_orange">当前位置：图书借还 &gt; 图书借阅 &gt;&gt;&gt;</td>
+                </tr>
+                <tr>
+                    <td align="center" valign="top" style="padding:5px;">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <form name="form1" method="post" action="#">
+                                {% csrf_token %}
+                                <tbody>
+                                <tr>
+                                    <td height="47" background="{% static 'borrowBackRenew.gif' %}">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td height="72" align="center" valign="top"
+                                        background="{% static 'main_booksort_1.gif' %}" bgcolor="#F8BF73">
+                                        <table width="96%" border="0" cellpadding="1" cellspacing="0"
+                                               bordercolor="#FFFFFF" bgcolor="#F8BF73">
+                                            <tbody>
+                                            <tr>
+                                                <td valign="top" bgcolor="#F8BF73">
+                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0"
+                                                           bgcolor="#FFFFFF">
+
+
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <table width="90%" height="21" border="0"
+                                                                       cellpadding="0" cellspacing="0">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td width="24%" height="18"
+                                                                            style="padding-left:7px;padding-top:7px;">
+                                                                            <img src="{% static 'reader_checkbg.jpg' %}"
+                                                                                 width="142" height="18"></td>
+                                                                        <td width="76%" style="padding-top:7px;">读者条形码：
+                                                                            <input name="barcode" type="text"
+                                                                                   id="barcode" value="" size="24">
+                                                                            &nbsp;
+
+                                                                            <input name="Button" type="button" id="Button"
+                                                                                   value="确定" class="btn_grey"
+                                                                                   onclick="funcborrow();">
+
+                                                                            </td>
+
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td height="13" align="left" style="padding-left:7px;">
+                                                                <hr width="90%" size="1">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <table width="96%" border="0" cellpadding="0"
+                                                                       cellspacing="0">
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <td height="27">姓&nbsp;&nbsp;&nbsp;&nbsp;名：
+                                                                            <input name="readername" type="text"
+                                                                                   id="readername"
+                                                                                   value="" readonly></td>
+                                                                        <td>性&nbsp;&nbsp;&nbsp;&nbsp;别：
+                                                                            <input name="sex" type="text" id="sex"
+                                                                                   value="" readonly></td>
+                                                                        <td>读者类型：
+                                                                            <input name="readerType" type="text"
+                                                                                   id="readerType"
+                                                                                   value="" readonly></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td height="27">证件类型：
+                                                                            <input name="paperType" type="text"
+                                                                                   id="paperType"
+                                                                                   value="" readonly></td>
+                                                                        <td>证件号码：
+                                                                            <input name="paperNo" type="text"
+                                                                                   id="paperNo"
+                                                                                   value="" readonly></td>
+                                                                        <td>可借数量：
+                                                                            <input name="number" type="text" id="number"
+                                                                                   value="" size="17" readonly>
+                                                                            册
+                                                                            &nbsp;
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td height="32" background="{% static 'borrow_if.gif' %}">&nbsp;添加的依据：
+                                                    <input name="f" type="radio" class="noborder" value="barcode"
+                                                           checked="">
+                                                    图书条形码 &nbsp;&nbsp;
+                                                    <input name="f" type="radio" class="noborder" value="bookname">
+                                                    图书名称&nbsp;&nbsp;
+                                                    <input name="inputkey" type="text" id="inputkey" size="50" value="" >
+                                                    <input name="Submit2" id="Submit2" type="button" class="btn_grey" value="确定"
+                                                      onclick="bookInfo();" >
+                                                    <input name="Button" type="submit" onclick="return borrow();" class="btn_grey" value="完成借阅">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="top" bgcolor="#FCEC9A" style="padding:5px">
+                                                    <table width="99%" border="1" cellpadding="0" cellspacing="0"
+                                                           bordercolor="#FFFFFF" bordercolorlight="#FFFFFF"
+                                                           bordercolordark="#F6B83B" bgcolor="#FFFFFF">
+                                                        <tbody>
+                                                        <tr align="center" bgcolor="#F9D16B">
+                                                            <td width="27%" height="25">图书名称</td>
+                                                            <td width="14%">借阅时间</td>
+                                                            <td width="14%">应还时间</td>
+                                                            <td width="17%">出版社</td>
+                                                            <td width="14%">书架</td>
+                                                            <td colspan="2">定价(元)</td>
+                                                        </tr>
+
+                                                        <tr align="center">
+                                                            <td height="25"><input id="bookname" name="bookname" type="text" style="width: 192px;height: 20px;border: none" readonly ></td>
+                                                            <td><input value="" id="olddate" name="olddate" type="date" style="width: 110px"></td>
+                                                            <td><input value="" id="newdate" name="newdate" type="date" style="width: 110px"></td>
+                                                            <td><input id="publish" name="publish" type="text" style="width: 121px;height: 20px;border: none" readonly ></td>
+                                                            <td><input id="operrate" name="operrate" type="text" style="width: 121px;height: 20px;border: none" readonly ></td>
+                                                            <td><input id="price" name="price" type="text" style="width: 50px;height: 20px;border: none" readonly ></td>
+                                                        </tr>
+
+                                                        <input name="borrowNumber" type="hidden" id="borrowNumber"
+                                                               value="0">
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td height="19" background="{% static 'main_booksort_2.gif' %}">&nbsp;</td>
+                                </tr>
+
+                                </tbody>
+                            </form>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+{% endblock %}

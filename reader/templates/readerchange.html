@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block main %}
+<tr>
+    <td height="510" valign="top" style="padding:5px;"><table width="98%" height="487" border="0" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td height="22" valign="top" class="word_orange">当前位置：读者管理 &gt; 读者档案管理 &gt; 修改读者信息 &gt;&gt;&gt;</td>
+      </tr>
+      <tr>
+        <td height="22" valign="top" class="word_orange">读者卡号:{{ reader.barcode }}</td>
+      </tr>
+      <tr>
+        <td align="center" valign="top">
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td width="84%">&nbsp;      </td>
+</tr>
+</tbody></table>
+<form name="form1" method="post" action="/reader/readerchange/{{ reader.rid }}" onsubmit="return checkAll4()">
+{% csrf_token %}
+  <table width="58%" border="0" cellpadding="0" cellspacing="0" bordercolor="#FFFFFF" bordercolordark="#D2E3E6" bordercolorlight="#FFFFFF">
+  <tbody><tr align="center">
+    <td width="20%" align="left" style="padding:5px;">读者姓名：</td>
+    <td width="80%" align="left">
+      <input name="rname" type="text" id="readname" value= '{{ reader.rname }}' size="30" onblur="checkRname()"><span id="rnameSpan"></span>
+    </td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">性&emsp;&emsp;别：</td>
+      <td align="left"><select name="gender" class="wenbenkuang" id="gender">
+        {% if reader.gender == '男' %}
+            <option value="男" selected>男</option>
+            <option value="女">女</option>
+        {% else %}
+            <option value="男" >男</option>
+            <option value="女" selected>女</option>
+        {% endif %}
+          </select></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">联系电话：</td>
+      <td align="left"><input name="tel" type="number" id="tel" size="30" value='{{ reader.tel }}' onblur="checkTel()"><span id="telSpan"></span></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">联系地址：</td>
+      <td align="left"><input name="address" type="text" id="address" size="30" value='{{ reader.address }}'></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">联系邮箱：</td>
+      <td align="left"><input name="email" type="text" id="email" size="30" value='{{ reader.email }}' onblur="checkEmail()"><span id="emailSpan"></span></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">证件类型：</td>
+      <td align="left"><select name="papertype" class="wenbenkuang" id="papertype" >
+          {% if reader.papertype == '身份证' %}
+            <option value="身份证" selected>身份证</option>
+          {% else %}
+        <option value="学生证" selected>学生证</option>
+            {% endif %}
+          </select></td>
+    </tr>
+    <tr>
+      <td align="left" style="padding:5px;">证件号码：</td>
+      <td align="left"><input name="paperno" type="number" id="paperno" size="30" value='{{ reader.paperno }}' readonly>
+      </td>
+    </tr>
+  <tr>
+      <td align="left" style="padding:5px;">出生日期：</td>
+      <td align="left"><input name="birthday" type="date" id="birthday" size="30" value='{{ reader.birthday|date:'Y-m-d' }}'>
+      </td>
+    </tr>
+    <tr>
+      <td  align="left" style="padding:5px;">借书卡类型：</td>
+      <td align="left"><select name="readtype" class="wenbenkuang" id="readtype">
+      {% if reader.rtid_id == 1 %}
+              <option value="1" selected>借阅卡</option>
+              <option value="2">读者卡</option>
+              <option value="3">高级读者卡</option>
+      {% elif reader.rtid_id == 2 %}
+        <option value="1">借阅卡</option>
+        <option value="2" selected>读者卡</option>
+        <option value="3">高级读者卡</option>
+          {% elif reader.rtid_id == 3 %}
+        <option value="1">借阅卡</option>
+        <option value="2">读者卡</option>
+        <option value="3" selected>高级读者卡</option>
+      {% endif %}
+          </select></td>
+    </tr>
+    <tr>
+      <td height="65" align="left" style="padding:5px;">&nbsp;</td>
+      <td><input name="Submit" type="submit" class="btn_grey" value="保存" onclick="checkForm1()">
+        &nbsp;
+        <input name="Submit2" type="reset" class="btn_grey" value="重置">
+          &nbsp;
+          <a href="/reader/"><input type="button" value="取消" class="btn_grey"></a>
+      </td>
+
+    </tr>
+</tbody></table>
+</form></td>
+      </tr>
+    </tbody></table>
+</td>
+  </tr>
+
+{% endblock %}
